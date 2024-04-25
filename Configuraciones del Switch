@@ -1,0 +1,43 @@
+--Configuraciones del Switch 1 (S1):
+
+hostname S1
+no ip domain-lookup
+enable secret class
+line console 0
+ password cisco
+ login
+line vty 0 4
+ password cisco
+ login
+service password-encryption
+banner motd $ Authorized Users Only! $
+exit
+
+interface range f0/1 - 4, f0/7 - 24, g0/1 - 2
+ switchport mode access
+ switchport access vlan 999
+ shutdown
+exit
+
+interface f0/6
+ switchport mode access
+ switchport access vlan 100
+
+--Configuraciones del Switch 2 (S2):
+
+hostname S2
+no ip domain-lookup
+enable secret class
+line console 0
+ password cisco
+ login
+line vty 0 4
+ password cisco
+ login
+service password-encryption
+banner motd $ Authorized Users Only! $
+exit
+
+interface range f0/1 - 4, f0/6 - 17, f0/19 - 24, g0/1 - 2
+ switchport mode access
+ shutdown
