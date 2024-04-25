@@ -1,0 +1,66 @@
+Configuraciones del Router 1 (R1):
+
+hostname R1
+no ip domain-lookup
+enable secret class
+line console 0
+ password cisco
+ login
+line vty 0 4
+ password cisco
+ login
+service password-encryption
+banner motd $ Authorized Users Only! $
+clock set 15:30:00 27 Aug 2019
+
+interface g0/0/1
+ no shutdown
+exit
+
+interface g0/0/1.100
+ description Client Network
+ encapsulation dot1q 100
+ ip address 192.168.1.1 255.255.255.192
+exit
+
+interface g0/0/1.200
+ description Management Network
+ encapsulation dot1q 200
+ ip address 192.168.1.65 255.255.255.224
+exit
+
+interface g0/0/1.1000
+ encapsulation dot1q 1000 native
+ description Native VLAN
+exit
+
+interface g0/0/0
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+
+Configuraciones del Router 2 (R2):
+hostname R2
+no ip domain-lookup
+enable secret class
+line console 0
+ password cisco
+ login
+line vty 0 4
+ password cisco
+ login
+service password-encryption
+banner motd $ Authorized Users Only! $
+clock set 15:30:00 27 Aug 2019
+
+interface g0/0/1
+ ip address 192.168.1.97 255.255.255.240
+ no shutdown
+exit
+
+interface g0/0/0
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
